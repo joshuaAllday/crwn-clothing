@@ -22,7 +22,7 @@ const App = ({ checkUserSession, currentUser }) => {
     checkUserSession();
   }, [checkUserSession]);
 
-  return (
+  return ( 
     <div>
       <GlobalStyle />
       <Header />
