@@ -6,6 +6,7 @@ import { createStructuredSelector } from 'reselect';
 import HomePage from './pages/homepage/homepage.component';
 import Header from './components/header/header.component';
 import Spinner from './components/spinner/spinner.component';
+import ErrorBoundary from './components/error-boundary/error-bounday.component';
 
 import { GlobalStyle } from './global.styles';
 
@@ -26,18 +27,20 @@ const App = ({ checkUserSession, currentUser }) => {
       <GlobalStyle />
       <Header />
       <Switch>
-        <Route exact path='/' component={HomePage} /> 
-        <Suspense fallback={<Spinner />}>
-          <Route path='/shop' component={ShopPage} />
-          <Route exact path='/checkout' component={CheckoutPage} />
-          <Route
-            exact
-            path='/signin'
-            render={() =>
-              currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage />
-            }
-          />
-        </Suspense>
+        <ErrorBoundary>
+          <Route exact path='/' component={HomePage} /> 
+          <Suspense fallback={<Spinner />}>
+            <Route path='/shop' component={ShopPage} />
+            <Route exact path='/checkout' component={CheckoutPage} />
+            <Route
+              exact
+              path='/signin'
+              render={() =>
+                currentUser ? <Redirect to='/' /> : <SignInAndSignUpPage />
+              }
+            />
+          </Suspense>
+        </ErrorBoundary>
       </Switch>
     </div>
   );
